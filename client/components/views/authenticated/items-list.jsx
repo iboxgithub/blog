@@ -1,18 +1,19 @@
 ItemsList = React.createClass({
     mixins: [ ReactMeteorData ],
     getMeteorData() {
-        let subscription = Meteor.subscribe( 'items' );//SPECIFIC
+        let subscription = Meteor.subscribe( 'items', this.props.lang );//SPECIFIC
 
         return {
             isLoading: !subscription.ready(),
             items: Items.find().fetch() //SPECIFIC
         };
     },handleNewItem() {
+        let lang = this.props.lang;
         Meteor.call( 'newItem', ( error, itemId ) => {
             if ( error ) {
                 Bert.alert( error.reason, 'danger' );
             } else {
-                FlowRouter.go( `/items/edit/${ itemId }` );
+                FlowRouter.go( `/items/${ lang }/edit/${ itemId }` );
                 Bert.alert( 'All set! Get to typin\'', 'success' );
             }
         });
@@ -33,7 +34,8 @@ ItemsList = React.createClass({
                     }
                     <ul style={listStyle}>
                         {this.data.items.map( ( item ) => { //todo:to update regarding DB
-                            return <Item key={item._id.toString()} item={item}  />;
+                            console.log('fe ' + item._id.toString());
+                            return <Item key={item._id.toString()} item={item} lang={this.props.lang} />;
                         })}
                     </ul>
                 </div>

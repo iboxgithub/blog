@@ -1,8 +1,8 @@
 Dropdown = React.createClass({
     getDefaultProps: function() {
         return {
-            langList: {FR:{label:"Francais"} , EN:{label:"English"}, SK:{label:"Slovak"},
-                RO:{label:"Romanian"}, RU:{label:"Russian"}}
+            langList: {fr:{label:"Francais"} , en:{label:"English"}, sk:{label:"Slovak"},
+                ro:{label:"Romanian"}, ru:{label:"Russian"}}
         };
     },
     propTypes: {

@@ -3,7 +3,7 @@ AppHeader = React.createClass({
     getMeteorData() {
         return {
             //!! to tranform object in Boolean
-            brandLink: !!Meteor.user() ? '/items' : '/', //SPECIFIC: to update regarding DB
+            brandLink: !!Meteor.user() ? '/items/fr' : '/items/en', //SPECIFIC: to update regarding DB todo: lang dynamic
             user: Meteor.user()
         };
     },

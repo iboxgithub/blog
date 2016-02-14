@@ -15,13 +15,13 @@ Item = React.createClass({
         ---------------------- GENERIC
         todo: update with DB this.props.item._id._str.toString();
          */
-        let _id = this.props.item._id.toString();
+        let _id = this.props.item._id.toString(); //valueOf();
         let currentUser = Meteor.user();
         /*
          ---------------------- END GENERIC
          */
 
-        let lang = 'FR', langTo = 'EN';
+        let lang = this.props.lang, langTo = 'EN';
         let author = !!this.props.item.content ? this.props.item.content[lang].author : 'Unknown author';
         let text = !!this.props.item.content ? this.props.item.content[lang].text : 'Unknown content';
 
@@ -33,7 +33,7 @@ Item = React.createClass({
                             {_id} created by {author} for lang {lang}
                         </div>
                         { currentUser ?
-                            <a href={'/items/edit/' + _id}>TRANSLATE</a> : ''
+                            <a href={'/items/' + {lang} + '/edit/' + _id}>TRANSLATE</a> : ''
                         }
                     </div>
                     <div className="panel-body">

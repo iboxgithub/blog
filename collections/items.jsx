@@ -18,43 +18,42 @@ Items.deny({
 let ItemsSchema = new SimpleSchema({
     "published": {
         type: Boolean,
-        label: "Is this item published?",
+        label: "Is this item published",
+        optional: true,
         autoValue() {
             if ( this.isInsert ) {
                 return false;
             }
         }
     },
-    "author": {
+    /*"author": {
         type: String,
         label: "The ID of the author of this item.",
         autoValue() {
             let user = Meteor.users.findOne( { _id: this.userId } );
             if ( user ) {
-                return '';//`${ user.profile.name.first } ${ user.profile.name.last }`;
+                return 'toto';//`${ user.profile.name.first } ${ user.profile.name.last }`;
             }
         }
-    },
+    },*/
     "updated": {
         type: String,
-        label: "The date this item was last updated on.",
+        label: "The date this item was last updated on",
         autoValue() {
             return ( new Date() ).toISOString();
         }
     },
-    "title": {
+    "category": {
         type: String,
-        label: "The title of this item.",
-        defaultValue: "Untitled Item"
+        label: "The category of this item",
+        autoValue() {
+            return 'Autres';
+        }
     },
     "content": {
-        type: String,
-        label: "The content of this item.",
-        optional: true
-    },
-    "tags": {
-        type: [ String ],
-        label: "The tags for this item.",
+        type: Object,
+        label: "The content of this item",
+        blackbox:true, //to avoid defining all fields (dynamic for languages)
         optional: true
     }
 });

@@ -8,17 +8,17 @@ const authenticatedRoutes = FlowRouter.group({
  ------------------------ END GENERIC
  */
 
-authenticatedRoutes.route( '/items', {
+authenticatedRoutes.route( '/items/:lang', {
     name: 'items',
-    action() {
-        ReactLayout.render( App, { yield: <ItemsList private={true}/> } );
+    action(params) {
+        ReactLayout.render( App, { yield: <ItemsList private={true} lang={params.lang}/> } );
     }
 });
 
-authenticatedRoutes.route( '/items/edit/:_id', {
+authenticatedRoutes.route( '/items/:lang/edit/:_id', {
     name: 'editor',
     action( params ) {
-        ReactLayout.render( App, { yield: <Editor item={ params._id } /> } );
+        ReactLayout.render( App, { yield: <Editor itemId={ params._id } lang={params.lang} /> } );
     }
 });
 
