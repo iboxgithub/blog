@@ -1,11 +1,17 @@
 Editor = React.createClass({
+    propTypes: {
+        itemId: React.PropTypes.string.isRequired,
+        lang: React.PropTypes.string.isRequired
+    },
+    getInitialState: function() {
+        return {testState: 'eee'};
+    },
+    componentDidMount() {
+        this.setState({testState: 'ffff'});
+    },
     mixins: [ ReactMeteorData ],
     getMeteorData() {
-
-        //var test = new ObjectId(this.props.itemId);
         Meteor.subscribe( 'item', this.props.itemId );
-
-        //console.log(this.props.itemId);
 
         return {
             item: Items.findOne( { _id: this.props.itemId } )
@@ -53,49 +59,6 @@ Editor = React.createClass({
             }
         };
     },
-    componentDidMount() {
-        //KOs - '[name="editItemForm"]' - '.editItemForm' for class
-        // - $('#editItemForm') for id - $(this.refs.form) - $(this.refs.editItemForm.refs.form) - $(this.refs.editItemForm)
-        // - var form = ReactDOM.findDOMNode(this.refs.editItemForm);
-        //$( this.refs.editItemForm  ).validate(
-        /*console.log('Letting this error to come back on the ReactDOM form link later');
-        var form = ReactDOM.findDOMNode(this.refs.editItemForm);
-        form.validate(
-            {
-                rules: {
-                    itemTitle: {
-                        required: true
-                    }
-                },
-                messages: {
-                    itemTitle: {
-                        required: "Hang on there, an item title is required!"
-                    }
-                },
-                submitHandler() {
-                    console.log('submitted');
-                    let component = this;
-                    let { getValue, isChecked } = ReactHelpers;
-
-                    //todo: check if working
-                    let form = component.refs.editItemForm.refs.form,
-                        item = {
-                            _id: component.props.item
-                        };
-
-                    Meteor.call( 'saveItem', item, ( error, response ) => {
-                        if ( error ) {
-                            Bert.alert( error.reason, 'danger' );
-                        } else {
-                            Bert.alert( 'Item saved!', 'success' );
-                        }
-                    });
-                }
-            }//}
-
-        );*/
-        //}
-    },
     getLastUpdate() {
         if ( this.data ) {
             let { formatLastUpdate } = ReactHelpers,
@@ -104,12 +67,10 @@ Editor = React.createClass({
             return `${ formatLastUpdate( item.updated ) } by ${ item.author }`;
         }
     },
-    getTags() {
-        let item = this.data.item;
-
-        if ( item && item.tags ) {
-            return item.tags.join( ', ' );
-        }
+    toto(tmp) {
+        //console.log("hello " + tmp);
+        //return 'toto gg ' + tmp;
+        this.setState({testState: 'aaaa'});
     },
     handleSubmitTo( event ) {
         event.preventDefault();
@@ -122,44 +83,49 @@ Editor = React.createClass({
         if ( !this.data.item ) { return <div>Item loading</div>; }
 
         let itemOwner = (Meteor.user()._id === this.data.item.content[this.props.lang].author) ? true : false;
+        let langFrom = this.props.lang;
+        let langTo = 'sk'; //todo: update with Translator best foreign lang
+        var boundClick = this.toto.bind(this, 're');
 
         return (
             <div>
                 <p className="updated-date">
                     <strong>Last Updated:</strong> { this.getLastUpdate() }
+                    <strong>Check reactivity:</strong> { this.state.testState }
                 </p>
 
                 <table>
                     <thead>
                         <tr>
                             <td>
-                                <Dropdown lang={this.props.lang} id="From"/>
+                                Item  to translate
                             </td>
                             <td>
-                                <Dropdown lang="en" id="To"/>
+                                Translation
                             </td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <Form ref="editItemFormFrom" id="editItemFormFrom" className="editItemFormFrom" validations={ this.validationsFrom() } onSubmit={ this.handleSubmitFrom }>
+                                <Dropdown lang={langFrom} src="From" fct={boundClick}/>
+                                <Form tmp={this.state.testState} ref="editItemFormFrom" id="editItemFormFrom" className="editItemFormFrom" validations={ this.validationsFrom() } onSubmit={ this.handleSubmitFrom }>
                                     <div className="form-group">
                                         <label>
                                             <input type="checkbox" name="itemPublishedFrom" id="#item-published-from"
-                                                   value={ this.data.item && this.data.item.published }/>
+                                                   value={ this.data.item && this.data.item.content[langFrom].published }/>
                                             Published?
                                         </label>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="itemTitleFrom">Item Title</label>
                                         <input type="text" name="itemTitleFrom" className="form-control" placeholder="Item Title" tabIndex="1"
-                                               defaultValue={ this.data.item && this.data.item.title }/>
+                                               defaultValue={ this.data.item && this.data.item.content[langFrom].title }/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="itemContentFrom">Item Content</label>
                                         <textarea name="itemContentFrom" className="form-control" placeholder="Item Content" tabIndex="2"
-                                                  defaultValue={ this.data.item && this.data.item.content }/>
+                                                  defaultValue={ this.data.item && this.data.item.content[langFrom].text }/>
                                     </div>
                                     { itemOwner ?
                                         <div className="form-group">
@@ -170,21 +136,24 @@ Editor = React.createClass({
                                 </Form>
                             </td>
                             <td>
+                                <Dropdown lang={langTo} src="To"/>
                                 <Form ref="editItemFormTo" id="editItemFormTo" className="editItemFormTo" validations={ this.validationsTo() } onSubmit={ this.handleSubmitTo }>
                                     <div className="form-group">
                                         <label>
                                             <input type="checkbox" name="itemPublishedTo" id="#item-published-to"
-                                                   value={ this.data.item && this.data.item.published }/>
+                                                   value={ this.data.item.content[langTo] && this.data.item.content[langTo].published }/>
                                             Published?
                                         </label>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="itemTitleTo">Item Title</label>
-                                        <input type="text" name="itemTitleTo" className="form-control" placeholder="Item Title" tabIndex="3"/>
+                                        <input type="text" name="itemTitleTo" className="form-control" placeholder="Item Title" tabIndex="3"
+                                               defaultValue={ this.data.item.content[langTo] && this.data.item.content[langTo].title }/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="itemContentTo">Item Content</label>
-                                        <textarea name="itemContentTo" className="form-control" placeholder="Item Content" tabIndex="4"/>
+                                        <textarea name="itemContentTo" className="form-control" placeholder="Item Content" tabIndex="4"
+                                              defaultValue={ this.data.item.content[langTo] && this.data.item.content[langTo].text }/>
                                     </div>
                                     <div className="form-group">
                                         <input type="submit" className="btn btn-success" value="Save translation" tabIndex="6"/>

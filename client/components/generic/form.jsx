@@ -16,6 +16,7 @@ Form = React.createClass({
             className={ this.props.className }
             onSubmit={ this.handleSubmit }
         >
+            {this.props.tmp}
             { this.props.children }
         </form>;
     }

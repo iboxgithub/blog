@@ -34,7 +34,7 @@ ItemsList = React.createClass({
                     }
                     <ul style={listStyle}>
                         {this.data.items.map( ( item ) => { //todo:to update regarding DB
-                            console.log('fe ' + item._id.toString());
+                            //console.log('fe ' + item._id.toString());
                             return <Item key={item._id.toString()} item={item} lang={this.props.lang} />;
                         })}
                     </ul>

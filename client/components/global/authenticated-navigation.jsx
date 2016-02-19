@@ -53,23 +53,23 @@ AuthenticatedNavigation = React.createClass({
                         //DropDownMenu handle items here
                         dropdownItems: [
                             { uid: langs.fr.id, href: '#', label: langs.fr.label, action: () => {
-                                Session.set('currentLang',langs.fr);
+                                //Session.set('currentLang',langs.fr);
                                 FlowRouter.go( 'items',{lang:langs.fr.id});
                             }},
                             { uid: langs.en.id, href: '#', label: langs.en.label, action: () => {
-                                Session.set('currentLang',langs.en);
+                                //Session.set('currentLang',langs.en);
                                 FlowRouter.go( 'items',{lang:langs.en.id});
                             }},
                             { uid: langs.sk.id, href: '#', label: langs.sk.label, action: () => {
-                                Session.set('currentLang',langs.sk);
+                                //Session.set('currentLang',langs.sk);
                                 FlowRouter.go( 'items',{lang:langs.sk.id});
                             }},
                             { uid: langs.ro.id, href: '#', label: langs.ro.label, action: () => {
-                                Session.set('currentLang',langs.ro);
+                                //Session.set('currentLang',langs.ro);
                                 FlowRouter.go( 'items',{lang:langs.ro.id});
                             }},
                             { uid: langs.ru.id, href: '#', label: langs.ru.label, action: () => {
-                                Session.set('currentLang',langs.ru);
+                                //Session.set('currentLang',langs.ru);
                                 FlowRouter.go( 'items',{lang:langs.ru.id});
                             }}
                         ]
