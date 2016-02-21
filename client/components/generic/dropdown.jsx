@@ -10,15 +10,10 @@ Dropdown = React.createClass({
         src: React.PropTypes.string.isRequired
     },
     handleClick(e) {
-        //console.log('dfvdv ' + e);
-        //Session.set('dropdown' + this.props.src, e);
-        //Session.set('langTo', e);
-        //console.log(this.props.fct);
-        console.log('toto');
+
         $(".dropdown").find('#dLabel' + this.props.src).html(this.props.langList[e].label + ' <span class="caret"></span>');
-        return (
-            this.props.fct
-                );
+        //console.log('rr ' + e);
+        this.props.callback(e);
     },
     renderListItems: function(langList) {
         //list of countries to update + put in conf or DB
@@ -27,13 +22,10 @@ Dropdown = React.createClass({
 
         Object.getOwnPropertyNames(langList).forEach(function(val, idx, array) {
             items.push(<li key={val}>
-                <a href="#" id={val} onClick={component.props.fct/*component.handleClick.bind(component, val)*/}>{langList[val].label}</a></li>);
+                <a href="#" id={val} onClick={/*component.props.callback*/ component.handleClick.bind(component, val)}>{langList[val].label}</a></li>);
         });
 
         return items;
-    },
-    test: function(){
-        console.log('test');
     },
     render: function() {
         //{this.props.list.id[this.props.lang].label}
