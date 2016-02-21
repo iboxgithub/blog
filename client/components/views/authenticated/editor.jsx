@@ -12,20 +12,25 @@ Editor = React.createClass({
     getMeteorData() {
         let sub = Meteor.subscribe( 'item', this.props.itemId );
 
+        /*this.setState({
+            titleTo: 'test title',
+            textTo: 'test text'
+        });*/
+
         return {
             item: Items.findOne( { _id: this.props.itemId } ),
             subReady: sub.ready()
         };
     },
     componentDidMount() {
-        if ( this.data.subReady ){
+        /*if ( this.data.subReady ){
             let titleTo = this.data.item.content[this.state.langTo] && this.data.item.content[this.state.langTo].title;
             let textTo = this.data.item.content[this.state.langTo] && this.data.item.content[this.state.langTo].text;
             this.setState({
                 titleTo: titleTo,
                 textTo: textTo
             });
-        }
+        }*/
 
 
     },
