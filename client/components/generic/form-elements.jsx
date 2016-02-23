@@ -1,12 +1,13 @@
 FormElement = React.createClass({
+    propTypes: {
+        //value: React.PropTypes.string.isRequired
+    },
     getInitialState: function() {
         return {
-            //test: this.props.defaultValue //todo: put user favorite lang
+            //value: this.props.value //todo: put user favorite lang
         };
     },
-    propTypes: {
-        //defaultValue: React.PropTypes.string.isRequired
-    },
+
     componentDidUpdate() {
         //console.log('componentDidUpdate ', this.props.value);
         //this.forceUpdate()
@@ -46,31 +47,60 @@ FormElement = React.createClass({
         }
     },
     renderFormControl() {
-        let fields = {
-            input: <input
-                ref={ this.props.ref }
-                type={ this.props.type }
-                className="form-control"
-                name={ this.props.name }
-                placeholder={ this.props.label }
-                disabled={ this.props.disabled }
-                onChange={ this.props.onChange }
-                value={ this.props.value }
-                //defaultValue={ this.props.defaultValue }
-            />,
-            textarea: <textarea
-                ref={ this.props.ref }
-                name={ this.props.name }
-                className="form-control"
-                placeholder={ this.props.label }
-                disabled={ this.props.disabled }
-                onChange={ this.props.onChange }
-                defaultValue={ this.props.defaultValue }
-            ></textarea>,
-            checkbox: <div className="checkbox">
-                <label>{ this.renderCheckbox() } { this.props.label }</label>
-            </div>
-        };
+        let fields;
+        if ( this.props.defaultValue ) {//Uncontrolled element (Default value so Editable AND not updatable via another comp)
+            fields = {
+                input: <input
+                    ref={ this.props.ref }
+                    type={ this.props.type }
+                    className="form-control"
+                    name={ this.props.name }
+                    placeholder={ this.props.label }
+                    disabled={ this.props.disabled }
+                    defaultValue={ this.props.defaultValue }
+                />,
+                textarea: <textarea
+                    ref={ this.props.ref }
+                    name={ this.props.name }
+                    className="form-control"
+                    placeholder={ this.props.label }
+                    disabled={ this.props.disabled }
+                    defaultValue={ this.props.defaultValue }
+                />,
+                checkbox: <div className="checkbox">
+                    <label>{ this.renderCheckbox() } { this.props.label }</label>
+                </div>
+            };
+        }
+        else { //Controlled element (Value so editable only via onChange AND updatable via other component)
+            fields = {
+                input: <input
+                    ref={ this.props.ref }
+                    type={ this.props.type }
+                    className="form-control"
+                    name={ this.props.name }
+                    placeholder={ this.props.label }
+                    disabled={ this.props.disabled }
+                    onChange={ this.props.onChange }
+                    value={ this.props.value }
+                    //defaultValue={ this.props.defaultValue }
+                />,
+                textarea: <textarea
+                    ref={ this.props.ref }
+                    name={ this.props.name }
+                    className="form-control"
+                    placeholder={ this.props.label }
+                    disabled={ this.props.disabled }
+                    onChange={ this.props.onChange }
+                    value={ this.props.value }
+                    //defaultValue={ this.props.defaultValue }
+                />,
+                checkbox: <div className="checkbox">
+                    <label>{ this.renderCheckbox() } { this.props.label }</label>
+                </div>
+            };
+        }
+
 
         return fields[ this.props.style ];
     },

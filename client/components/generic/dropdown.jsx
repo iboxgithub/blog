@@ -28,16 +28,12 @@ Dropdown = React.createClass({
         return items;
     },
     render: function() {
-        //{this.props.list.id[this.props.lang].label}
-        //var langList= {FR:{label:"Francais"} , EN:{label:"English"}, SK:{label:"Slovak"},
-           // RO:{label:"Romanian"}, RU:{label:"Russian"}};
 
-        //Session.set('dropdown' + this.props.src, this.props.lang);
-
+        //todo: we put Choose your lang because the data at first render is f***ing annoying to do in our case, to refactor later
         return <div className="dropdown">
                     <a id={"dLabel" + this.props.src} className="btn btn-info" data-target="#"
                        data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        {this.props.langList[this.props.lang].label}
+                        Choose your language{/*this.props.langList[this.props.lang].label*/}
                         <span className="caret" ref="caret"></span>
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="dLabel">

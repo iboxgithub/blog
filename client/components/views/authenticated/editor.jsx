@@ -5,68 +5,65 @@ Editor = React.createClass({
     },
     getInitialState: function() {
         return {
-            langTo: 'sk' //todo: put user favorite lang
+            langTo: ''//, //todo: put user favorite lang
         };
     },
     mixins: [ ReactMeteorData ],
     getMeteorData() {
         let sub = Meteor.subscribe( 'item', this.props.itemId );
-
-        /*this.setState({
-            titleTo: 'test title',
-            textTo: 'test text'
-        });*/
+        var item = Items.findOne( { _id: this.props.itemId } );
 
         return {
-            item: Items.findOne( { _id: this.props.itemId } ),
-            subReady: sub.ready()
+            item: item
+            //subReady: sub.ready()
         };
     },
     componentDidMount() {
-        /*if ( this.data.subReady ){
-            let titleTo = this.data.item.content[this.state.langTo] && this.data.item.content[this.state.langTo].title;
-            let textTo = this.data.item.content[this.state.langTo] && this.data.item.content[this.state.langTo].text;
-            this.setState({
-                titleTo: titleTo,
-                textTo: textTo
-            });
-        }*/
-
 
     },
     validationsFrom() {
         //todo: make editable only for the owner (or put some review process)
-    },
-    validationsTo() {
-        //console.log('rre');
         let component = this;
 
         return {
+            ignore: [],
             rules: {
                 itemTitle: {
+                    required: true
+                },
+                itemContent:{
+                    required: true
+                },
+                lang:{
                     required: true
                 }
             },
             messages: {
                 itemTitle: {
                     required: "Hang on there, an item title is required!"
+                },
+                itemContent:{
+                    required: "Gosh...you again forgot your content!"
+                },
+                lang:{
+                    required: "Hopla! Did you choose a language? (Careful, it will reset your fields)"
                 }
             },
             submitHandler() {
                 let { getValue, isChecked } = ReactHelpers;
 
-                let form = component.refs.editItemFormTo.refs.form,
+                let form = component.refs.editItemFormFrom.refs.form,
                     item = {
                         _id: component.props.itemId,
-                        authorTo:Meteor.user()._id,
-                        titleTo: component.state.titleTo,
-                        textTo: component.state.textTo,
-                        publishedTo: isChecked( form, '[name="itemPublishedTo"]' ),
+                        author:Meteor.user()._id,
+                        title: component.state.titleFrom,
+                        text: component.state.textFrom,
+                        //publishedTo: isChecked( form, '[name="itemPublishedFrom"]' ),
                         //todo: [langTo] When we loose session we keep the good dropdown value BUT the session is reseted so EN everytime
-                        langTo: component.state.langTo
+                        lang: component.props.lang
                     };
 
-                Meteor.call( 'saveItemTo', item, ( error, response ) => {
+                Meteor.call( 'saveItem', item, ( error, response ) => {
                     if ( error ) {
                         Bert.alert( error.reason, 'danger' );
                     } else {
@@ -76,23 +73,81 @@ Editor = React.createClass({
             }
         };
     },
-    getLastUpdate() {
-        if ( this.data ) {
-            let { formatLastUpdate } = ReactHelpers,
-                item                 = this.data.item;
+    handleChangeTitleFrom(e){
+        //console.log('Form element titleTo changed', e.target.value);
+        this.setState({titleFrom: e.target.value});
+    },
+    handleChangeTextFrom(e){
+        //console.log('Form element textTo changed', e.target.value);
+        this.setState({textFrom: e.target.value});
+    },
+    validationsTo() {
+        //console.log('rre');
+        let component = this;
 
-            return `${ formatLastUpdate( item.updated ) } by ${ item.author }`;
-        }
+        return {
+            ignore: [],
+            rules: {
+                itemTitle: {
+                    required: true
+                },
+                itemContent:{
+                    required: true
+                },
+                lang:{
+                    required: true
+                }
+            },
+            messages: {
+                itemTitle: {
+                    required: "Hang on there, an item title is required!"
+                },
+                itemContent:{
+                    required: "Gosh...you again forgot your content!"
+                },
+                lang:{
+                    required: "Hopla! Did you choose a language? (Careful, it will reset your fields)"
+                }
+            },
+            submitHandler() {
+                let { getValue, isChecked } = ReactHelpers;
+
+                let form = component.refs.editItemFormTo.refs.form,
+                    item = {
+                        _id: component.props.itemId,
+                        author:Meteor.user()._id,
+                        title: component.state.titleTo,
+                        text: component.state.textTo,
+                        //published: isChecked( form, '[name="itemPublishedTo"]' ),
+                        //todo: [langTo] When we loose session we keep the good dropdown value BUT the session is reseted so EN everytime
+                        lang: component.state.langTo
+                    };
+
+                Meteor.call( 'saveItem', item, ( error, response ) => {
+                    if ( error ) {
+                        Bert.alert( error.reason, 'danger' );
+                    } else {
+                        Bert.alert( 'Item saved!', 'success' );
+                    }
+                });
+            }
+        };
     },
     dropdownCallbackTo(value) {
         //console.log('Dropdown changed',value);
         this.setState({langTo: value}); //todo: understand why the setState function is so long that we need to use the variable value (it looks like it is just set at the end)
-        let titleTo = this.data.item.content[value] && this.data.item.content[value].title,
+        let //publishedTo = this.data.item.content[value] && this.data.item.content[value].published,
+            titleTo = this.data.item.content[value] && this.data.item.content[value].title,
             textTo = this.data.item.content[value] && this.data.item.content[value].text;
         this.setState({
+            //publishedTo: titleTo,
             titleTo: titleTo,
             textTo: textTo
         });
+    },
+    handleChangePublishedTo(e){
+        console.log('Form element publishedTo changed', e.target.value);
+        this.setState({publishedTo: e.target.value});
     },
     handleChangeTitleTo(e){
         //console.log('Form element titleTo changed', e.target.value);
@@ -102,17 +157,30 @@ Editor = React.createClass({
         //console.log('Form element textTo changed', e.target.value);
         this.setState({textTo: e.target.value});
     },
+    handleChangeGeneric(e){
+        //console.log('Form element textTo changed', e.target.value);
+        //this.setState({textTo: e.target.value});
+    },
     handleSubmitTo( event ) {
         event.preventDefault();
     },
     handleSubmitFrom( event ) {
         event.preventDefault();
     },
+    getLastUpdate() {
+        if ( this.data ) {
+            let { formatLastUpdate } = ReactHelpers,
+                item                 = this.data.item;
+
+            return `${ formatLastUpdate( item.updated ) } by ${ item.author }`;
+        }
+    },
     render() {
 
         if ( !this.data.item ) { return <div>Item loading</div>; }
 
 
+        //todo not working I think
         let itemOwner = (Meteor.user()._id === this.data.item.content[this.props.lang].author) ? true : false;
         let langFrom = this.props.lang;
         let langTo = 'sk'; //todo: put user favorite lang --> different then the State because it will not get rerendered at every change and will not cause an Invariant Violation
@@ -142,48 +210,55 @@ Editor = React.createClass({
                                     //<Dropdown lang={langFrom} src="From"/>
                                 }
                                 <Form ref="editItemFormFrom" id="editItemFormFrom" className="editItemFormFrom" validations={ this.validationsFrom() } onSubmit={ this.handleSubmitFrom }>
-                                    <div className="form-group">
-                                        <label>
-                                            <input type="checkbox" name="itemPublishedFrom" id="#item-published-from"
-                                                   value={ this.data.item && this.data.item.content[langFrom].published }/>
-                                            Published?
-                                        </label>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="itemTitleFrom">Item Title</label>
-                                        <input type="text" name="itemTitleFrom" className="form-control" placeholder="Item Title" tabIndex="1"
-                                               defaultValue={ this.data.item && this.data.item.content[langFrom].title }/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="itemContentFrom">Item Content</label>
-                                        <textarea name="itemContentFrom" className="form-control" placeholder="Item Content" tabIndex="2"
-                                                  defaultValue={ this.data.item && this.data.item.content[langFrom].text }/>
-                                    </div>
-                                    { itemOwner ?
-                                        <div className="form-group">
-                                            <input type="submit" className="btn btn-success" value="Save translation" tabIndex="6"/>
-                                        </div> : ''
-                                    }
-
-                                </Form>
-                            </td>
-                            <td>
-                                <Dropdown lang={langTo} src="To" callback={boundClickTo}/>
-                                <Form ref="editItemFormTo" id="editItemFormTo" className="editItemFormTo" validations={ this.validationsTo() } onSubmit={ this.handleSubmitTo }>
-                                    <div className="form-group">
-                                        <label>
-                                            <input type="checkbox" name="itemPublishedTo" id="#item-published-to"
-                                                   value={ this.data.item.content[this.state.langTo] && this.data.item.content[this.state.langTo].published }
-                                                   onChange={this.handleChange}/>
-                                            Published?
-                                        </label>
-                                    </div>
                                     <FormGroup>
                                         <FormElement //todo: add placeholder and tabIndex
                                             showLabel={ true }
                                             style="input"
                                             type="text"
-                                            name="itemTitleTo"
+                                            name="itemTitle"
+                                            label="Item Title"
+                                            defaultValue={ this.data.item.content[langFrom] && this.data.item.content[langFrom].title }
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormElement //todo: add placeholder and tabIndex
+                                            showLabel={ true }
+                                            style="textarea"
+                                            type="text"
+                                            name="itemContent"
+                                            label="Item Content"
+                                            defaultValue={ this.data.item.content[langFrom] && this.data.item.content[langFrom].text }
+                                        />
+                                    </FormGroup>
+                                    <input name="lang" value={langFrom} onChange={this.handleChangeGeneric} hidden/>
+                                    { itemOwner ?
+                                        <div className="form-group">
+                                            <input type="submit" className="btn btn-success" value="Save translation" tabIndex="6"/>
+                                        </div> : ''
+                                    }
+                                </Form>
+                            </td>
+                            <td>
+                                <Dropdown lang={langTo} src="To" callback={boundClickTo}/>
+                                <Form ref="editItemFormTo" id="editItemFormTo" className="editItemFormTo" validations={ this.validationsTo() } onSubmit={ this.handleSubmitTo }>
+                                    {/* <div className="form-group">
+                                        <label>
+
+                                            <input
+                                                type="checkbox"
+                                                checked={this.state.publishedTo}
+                                                //ref="complete"
+                                                onClick={this.handleChangePublishedTo}
+                                            />
+                                        </label>
+                                    </div>
+                                           */ }
+                                    <FormGroup>
+                                        <FormElement //todo: add placeholder and tabIndex
+                                            showLabel={ true }
+                                            style="input"
+                                            type="text"
+                                            name="itemTitle"
                                             label="Item Title"
                                             onChange={ this.handleChangeTitleTo }
                                             value={this.state.titleTo}
@@ -193,14 +268,15 @@ Editor = React.createClass({
                                     <FormGroup>
                                         <FormElement //todo: add placeholder and tabIndex
                                             showLabel={ true }
-                                            style="input"
+                                            style="textarea"
                                             type="text"
-                                            name="itemContentTo"
+                                            name="itemContent"
                                             label="Item Content"
                                             onChange={ this.handleChangeTextTo }
                                             value={this.state.textTo}
                                         />
                                     </FormGroup>
+                                    <input name="lang" value={this.state.langTo} onChange={this.handleChangeGeneric} hidden/>
                                     <div className="form-group">
                                         <input type="submit" className="btn btn-success" value="Save translation" tabIndex="6"/>
                                     </div>
