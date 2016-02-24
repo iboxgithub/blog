@@ -19,7 +19,7 @@ Editor = React.createClass({
         };
     },
     componentDidMount() {
-
+        //console.log('lang ' + this.props.lang);
     },
     validationsFrom() {
         //todo: make editable only for the owner (or put some review process)
@@ -50,14 +50,15 @@ Editor = React.createClass({
                 }
             },
             submitHandler() {
+
                 let { getValue, isChecked } = ReactHelpers;
 
                 let form = component.refs.editItemFormFrom.refs.form,
                     item = {
                         _id: component.props.itemId,
                         author:Meteor.user()._id,
-                        title: component.state.titleFrom,
-                        text: component.state.textFrom,
+                        title: getValue( form, '[name="itemTitle"]' ),
+                        text: getValue( form, '[name="itemContent"]' ),
                         //publishedTo: isChecked( form, '[name="itemPublishedFrom"]' ),
                         //todo: [langTo] When we loose session we keep the good dropdown value BUT the session is reseted so EN everytime
                         lang: component.props.lang
@@ -181,10 +182,10 @@ Editor = React.createClass({
 
 
         //todo not working I think
-        let itemOwner = (Meteor.user()._id === this.data.item.content[this.props.lang].author) ? true : false;
+        let itemOwner = true;//(Meteor.user()._id === this.data.item.content[this.props.lang].author) ? true : false;
         let langFrom = this.props.lang;
         let langTo = 'sk'; //todo: put user favorite lang --> different then the State because it will not get rerendered at every change and will not cause an Invariant Violation
-        var boundClickTo = this.dropdownCallbackTo.bind(this);
+        var boundClickTo = this.dropdownCallbackTo.bind(this);//todo: understand how to avoid warning
 
         return (
             <div>
@@ -273,7 +274,9 @@ Editor = React.createClass({
                                             name="itemContent"
                                             label="Item Content"
                                             onChange={ this.handleChangeTextTo }
-                                            value={this.state.textTo}
+                                            value={this.state.textTo || ''}
+                                            // required for reset form to work (only on textarea's)
+                                            // see: https://github.com/facebook/react/issues/2533
                                         />
                                     </FormGroup>
                                     <input name="lang" value={this.state.langTo} onChange={this.handleChangeGeneric} hidden/>

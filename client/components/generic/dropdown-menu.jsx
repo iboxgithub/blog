@@ -4,7 +4,10 @@ DropdownMenu = React.createClass({
     },
     renderItem( item, index ) {
         let active = item.active ? 'active' : '';
-        return <li key={ `nav-item-${ item.uid }` } className={ active } onClick={ item.action }>
+        let component = this; //todo: understand why 'this' alone doesnt work
+        let key = item.uid;//`nav-item-${ item.uid }`;
+
+        return <li key={ key } className={ active } onClick={ item.action.bind(component, key) }>
             <a href={ item.href }>{ item.label }</a>
         </li>;
     },

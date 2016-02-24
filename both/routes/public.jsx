@@ -9,7 +9,7 @@ const publicRoutes = FlowRouter.group({
 publicRoutes.route( '/', {
     name: 'index',
     action() {
-        ReactLayout.render( App, { yield: <ItemsList /> } ); //SPECIFIC (PostsIndex, Index...)
+        ReactLayout.render( App, { yield: <ItemsList private={false} lang={'en'} /> } ); //SPECIFIC (PostsIndex, Index...)
     }
 });
 

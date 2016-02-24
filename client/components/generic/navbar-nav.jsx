@@ -1,10 +1,10 @@
 NavBarNav = React.createClass({
     renderDropdown( item, index ) {
-        let active = item.active ? 'dropdown active' : '';
+        let active = item.active ? 'dropdown active' : item.uid;
         return (
             <li key={ `nav-item-${ item.uid }` } className={ active }>
-                <a href={ item.href } className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    { item.label } <span className="caret"></span>
+                <a href={ item.href } className="dropdown-toggle" id={item.uid} data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    { /*Session.get('lang')*/item.label } <span className="caret"></span>
                 </a>
                 <DropdownMenu items={ item.dropdownItems } />
             </li>

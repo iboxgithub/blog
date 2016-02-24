@@ -8,9 +8,13 @@ Item = React.createClass({
     componentDidMount() {
         //Modules.client.anegdot( { form: "#anegdot" } );
     },
-    /*handleSubmit( event ) {
+    handleTranslate( event ) {
         event.preventDefault();
-    },*/
+        let _id = this.props.item._id.toString();
+        let lang = this.props.lang;
+        let author = !!this.props.item.content[lang] ? this.props.item.content[lang].author : 'Unknown author';
+        FlowRouter.go('editor',{lang:lang, _id:_id})
+    },
     render() {
         /*
         ---------------------- GENERIC
@@ -25,16 +29,17 @@ Item = React.createClass({
         let lang = this.props.lang;
         let author = !!this.props.item.content[lang] ? this.props.item.content[lang].author : 'Unknown author';
         let text = !!this.props.item.content[lang] ? this.props.item.content[lang].text : 'Unknown content';
+        let title = !!this.props.item.content[lang] ? this.props.item.content[lang].title : 'Unknown content';
 
         return (
             <li>
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <div>
-                            {_id} created by {author} for lang {lang}
+                            {title}
                         </div>
                         { currentUser ?
-                            <a href={'/items/' + lang + '/edit/' + _id}>TRANSLATE</a> : ''
+                            <input className="btn btn-warning" type="button" value="Translate" onClick={ this.handleTranslate } />:''//<a href={'/items/' + lang + '/edit/' + _id}>TRANSLATE</a> : ''
                         }
                     </div>
                     <div className="panel-body">

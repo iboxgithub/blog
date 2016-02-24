@@ -87,6 +87,7 @@ FormElement = React.createClass({
                 />,
                 textarea: <textarea
                     ref={ this.props.ref }
+                    type={ this.props.type }
                     name={ this.props.name }
                     className="form-control"
                     placeholder={ this.props.label }

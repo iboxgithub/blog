@@ -54,7 +54,12 @@ let ItemsSchema = new SimpleSchema({
         type: Object,
         label: "The content of this item",
         blackbox:true, //to avoid defining all fields (dynamic for languages)
-        optional: true
+        optional: true,
+        autoValue() {
+            if(this.isInsert){
+                return {};
+            }
+        }
     }
 });
 

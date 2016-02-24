@@ -22,7 +22,7 @@ Dropdown = React.createClass({
 
         Object.getOwnPropertyNames(langList).forEach(function(val, idx, array) {
             items.push(<li key={val}>
-                <a href="#" id={val} onClick={/*component.props.callback*/ component.handleClick.bind(component, val)}>{langList[val].label}</a></li>);
+                <a href="#" id={val} onClick={component.handleClick.bind(component, val)}>{langList[val].label}</a></li>);
         });
 
         return items;
