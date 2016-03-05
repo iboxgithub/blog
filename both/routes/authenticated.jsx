@@ -22,6 +22,13 @@ authenticatedRoutes.route( '/items/:lang/edit/:_id', {
     }
 });
 
+authenticatedRoutes.route( '/items/:lang/detail/:_id', {
+    name: 'item-detail',
+    action(params) {
+        ReactLayout.render( App, { yield: <ItemDetail itemId={ params._id } lang={params.lang}/> } ); //SPECIFIC (PostsIndex, Index...)
+    }
+});
+
 authenticatedRoutes.route( '/account', {
     name: 'account',
     action() {

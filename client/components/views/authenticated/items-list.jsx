@@ -25,7 +25,8 @@ ItemsList = React.createClass({
     render() {
         let currentUser = Meteor.user(), admin = false;
         let listStyle = {
-            listStyleType: 'none' //to remove dots in front of elements of ul (li)
+            listStyleType: 'none', //to remove dots in front of elements of ul (li)
+            padding: 0 //to avoid padding to the left border
         };
         if(currentUser && currentUser._id == 'adminIdToDetermineOrSpecificValueInDB')
             admin = true;

@@ -15,6 +15,12 @@ Item = React.createClass({
         let author = !!this.props.item.content[lang] ? this.props.item.content[lang].author : 'Unknown author';
         FlowRouter.go('editor',{lang:lang, _id:_id})
     },
+    handleDetail( event ) {
+        event.preventDefault();
+        let _id = this.props.item._id.toString();
+        let lang = this.props.lang;
+        FlowRouter.go('item-detail',{lang:lang, _id:_id})
+    },
     render() {
         /*
         ---------------------- GENERIC
@@ -36,11 +42,12 @@ Item = React.createClass({
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <div>
-                            {title}
+                            [{_id}] {title}
                         </div>
                         { currentUser ?
                             <input className="btn btn-warning" type="button" value="Translate" onClick={ this.handleTranslate } />:''//<a href={'/items/' + lang + '/edit/' + _id}>TRANSLATE</a> : ''
                         }
+                        <input className="btn btn-success" type="button" value="Detail" onClick={ this.handleDetail } />
                     </div>
                     <div className="panel-body">
                         {text}

@@ -173,12 +173,13 @@ Editor = React.createClass({
             let { formatLastUpdate } = ReactHelpers,
                 item                 = this.data.item;
 
-            return `${ formatLastUpdate( item.updated ) } by ${ item.author }`;
+            //return `${ formatLastUpdate( item.updated ) } by ${ item.author }`;
+            return `${ formatLastUpdate( item.updated ) }`;
         }
     },
     render() {
 
-        if ( !this.data.item ) { return <div>Item loading</div>; }
+        if ( !this.data.item ) { return <div>Item loading...</div>; }
 
 
         //todo not working I think
@@ -189,9 +190,30 @@ Editor = React.createClass({
 
         return (
             <div>
-                <p className="updated-date">
-                    <strong>Last Updated:</strong> { this.getLastUpdate() }
-                </p>
+                <div>
+                    <table className="table table-bordered">
+                        <thead>
+                        <tr>
+                            <td>
+                                From
+                            </td>
+                            <td>
+                                To
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                {this.props.lang}
+                            </td>
+                            <td>
+                                <Dropdown lang={langTo} src="To" callback={boundClickTo}/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <table>
                     <thead>
@@ -207,9 +229,6 @@ Editor = React.createClass({
                     <tbody>
                         <tr>
                             <td>
-                                {
-                                    //<Dropdown lang={langFrom} src="From"/>
-                                }
                                 <Form ref="editItemFormFrom" id="editItemFormFrom" className="editItemFormFrom" validations={ this.validationsFrom() } onSubmit={ this.handleSubmitFrom }>
                                     <FormGroup>
                                         <FormElement //todo: add placeholder and tabIndex
@@ -234,26 +253,16 @@ Editor = React.createClass({
                                     <input name="lang" value={langFrom} onChange={this.handleChangeGeneric} hidden/>
                                     { itemOwner ?
                                         <div className="form-group">
-                                            <input type="submit" className="btn btn-success" value="Save translation" tabIndex="6"/>
+                                            <input type="submit" className="btn btn-warning" value="Update source" tabIndex="6"/>
                                         </div> : ''
                                     }
                                 </Form>
                             </td>
                             <td>
-                                <Dropdown lang={langTo} src="To" callback={boundClickTo}/>
+                                {
+                                    //<Dropdown lang={langTo} src="To" callback={boundClickTo}/>
+                                     }
                                 <Form ref="editItemFormTo" id="editItemFormTo" className="editItemFormTo" validations={ this.validationsTo() } onSubmit={ this.handleSubmitTo }>
-                                    {/* <div className="form-group">
-                                        <label>
-
-                                            <input
-                                                type="checkbox"
-                                                checked={this.state.publishedTo}
-                                                //ref="complete"
-                                                onClick={this.handleChangePublishedTo}
-                                            />
-                                        </label>
-                                    </div>
-                                           */ }
                                     <FormGroup>
                                         <FormElement //todo: add placeholder and tabIndex
                                             showLabel={ true }
@@ -281,7 +290,7 @@ Editor = React.createClass({
                                     </FormGroup>
                                     <input name="lang" value={this.state.langTo} onChange={this.handleChangeGeneric} hidden/>
                                     <div className="form-group">
-                                        <input type="submit" className="btn btn-success" value="Save translation" tabIndex="6"/>
+                                        <input type="submit" className="btn btn-warning" value="Save translation" tabIndex="6"/>
                                     </div>
                                 </Form>
                             </td>
@@ -289,6 +298,9 @@ Editor = React.createClass({
                     </tbody>
                 </table>
 
+                <p className="updated-date">
+                    <strong>Last Update:</strong> { this.getLastUpdate() }
+                </p>
             </div>
 
         );
