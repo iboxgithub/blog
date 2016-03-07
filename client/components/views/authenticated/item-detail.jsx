@@ -31,8 +31,8 @@ ItemDetail = React.createClass({
         return (
             <div className="panel panel-success">
                 <div className="panel-heading">
-                    <div>
-                        [{_id}] {title}
+                    <div className= "title">
+                         {title}
                     </div>
                 </div>
                 <div className="panel-body">

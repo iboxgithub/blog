@@ -42,18 +42,27 @@ Item = React.createClass({
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         <div>
-                            [{_id}] {title}
+                             {title}
                         </div>
-                        { currentUser ?
-                            <input className="btn btn-warning" type="button" value="Translate" onClick={ this.handleTranslate } />:''//<a href={'/items/' + lang + '/edit/' + _id}>TRANSLATE</a> : ''
-                        }
-                        <input className="btn btn-success" type="button" value="Detail" onClick={ this.handleDetail } />
+                        <div className="icons">
+                            { currentUser ?
+                            <i className="fa fa-globe fa-2x" value="Translate" onClick={ this.handleTranslate }></i>
+                                :''//<a href={'/items/' + lang + '/edit/' + _id}>TRANSLATE</a> : ''
+                            }
+                            <i className="fa fa-info-circle fa-2x"type="button" value="Detail" onClick={ this.handleDetail } ></i>
+
+                        </div>
                     </div>
                     <div className="panel-body">
-                        {text}
+                        <p> {text} </p>
                     </div>
                 </div>
             </li>
         );
     }
 });
+
+/*{ currentUser ?
+ <input className="btn btn-warning" type="button" value="Translate" onClick={ this.handleTranslate } />:''//<a href={'/items/' + lang + '/edit/' + _id}>TRANSLATE</a> : ''
+ }
+ <input className="btn btn-success" type="button" value="Detail" onClick={ this.handleDetail } />*/

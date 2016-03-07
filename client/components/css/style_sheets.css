@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 0;
+}
+
+body {
+ color: lightslategrey;
+}
+
+p {
+    word-break: break-all;
+}
+.title {
+    font-size: medium;
+}
+input {
+    border: none;
+    border-radius: 0;
+}
+
+.panel, .panel-default {
+    background: white;
+}
+
+input .btn .btn-success {
+    background: #087E8B;
+    border-radius: 0;
+}
+
+.icons {
+    display: flex;
+    flex-flow: row;
+    align-content: center;
+}
+
+i {
+    margin: 0 10px;
+    cursor: pointer;
+    color: #0B3954;
+    font-size: 24px !important;
+}
+
+i:hover {
+    color: #2A9C15;
+}
+
+.navbar-default .navbar-brand {
+    color: #FDFDFD;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-nav > li > a:hover {
+    color: #2BB9B9;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    color: #2BB9B9;
+    background-color: transparent;
+}
+
+
+.navbar-default .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.panel-default {
+    border: none;
+    border-radius: 0;
+    box-shadow: 3px 3px 5px 0 #cfcfcf;
+    margin: 15px;
+}
+
+.panel-default > .panel-heading {
+    background: #E5E5E5;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0;
+    border: none;
+
+}
+
+.navbar-default {
+    background: #0B3954;
+    border: none;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: 0 5px 5px 0 #cfcfcf;
+
+}
+
+.navbar-default > a {
+    color: white !important;
+}
+
+.container  {
+    position: relative;
+    top: 50px;
+    padding: 50px;
+}
