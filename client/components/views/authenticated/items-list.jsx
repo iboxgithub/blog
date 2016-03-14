@@ -1,7 +1,11 @@
 ItemsList = React.createClass({
-    mixins: [ ReactMeteorData ],
+    getInitialState: function() {
+        return {
+            limit: 2//, //todo: put user favorite lang
+        };
+    },mixins: [ ReactMeteorData ],
     getMeteorData() {
-        let subscription = Meteor.subscribe( 'items', this.props.lang );//SPECIFIC
+        let subscription = Meteor.subscribe( 'items', this.props.lang, this.state.limit );//SPECIFIC
 
         return {
             isLoading: !subscription.ready(),
@@ -21,6 +25,11 @@ ItemsList = React.createClass({
                 Bert.alert( 'All set! Get to typin\'', 'success' );
             }
         });
+    },
+    handleLoad(event) {
+        event.preventDefault();
+        var limit = this.state.limit;
+        this.setState({limit: limit + 10});
     },
     render() {
         let currentUser = Meteor.user(), admin = false;
@@ -45,7 +54,9 @@ ItemsList = React.createClass({
                             return <Item key={item._id.toString()} item={item} lang={this.props.lang} />;
                         })}
                     </ul>
+                    <a className="load-more" type="button" onClick={ this.handleLoad }>Load more</a>
                 </div>
+
             );
         }
     }

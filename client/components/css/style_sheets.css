@@ -47,6 +47,7 @@ i:hover {
 
 .navbar-default .navbar-brand {
     color: #FDFDFD;
+    z-index: 99;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -90,6 +91,7 @@ i:hover {
     width: 100%;
     border-radius: 0;
     box-shadow: 0 5px 5px 0 #cfcfcf;
+    z-index: 99;
 
 }
 
@@ -101,4 +103,49 @@ i:hover {
     position: relative;
     top: 50px;
     padding: 50px;
+    z-index: 9;
+}
+
+table {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: 3px 3px 5px 0 #cfcfcf;
+    border-left: 1px solid #E7E7E7;
+}
+
+.table-bordered {
+    border: none;
+    border-radius: 0;
+    box-shadow: 3px 3px 5px 0 #cfcfcf;
+}
+
+thead {
+    background: #E5E5E5;
+}
+
+td {
+    padding:  10px;
+    width: 50%;
+    border: none;
+}
+
+textarea.form-control {
+    height: 150px;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.btn-info {
+    color: #3C8E2D;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-info:hover {
+    color: #17298e;
+    background-color: transparent;
+    border-color: transparent;
 }
