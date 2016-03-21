@@ -1,7 +1,7 @@
 /**
  * Created by ibox on 31/01/16.
  */
-Items = new Mongo.Collection( 'anegdots2' );
+Items = new Mongo.Collection( 'anegdots' );
 
 Items.allow({
     insert: () => false,

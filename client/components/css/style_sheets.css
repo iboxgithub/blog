@@ -11,6 +11,10 @@ body {
 p {
     word-break: break-all;
 }
+
+a {
+    cursor: pointer;
+}
 .title {
     font-size: medium;
 }

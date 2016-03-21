@@ -54,7 +54,7 @@ ItemsList = React.createClass({
                             return <Item key={item._id.toString()} item={item} lang={this.props.lang} />;
                         })}
                     </ul>
-                    <a className="load-more" type="button" onClick={ this.handleLoad }>Load more</a>
+                    <a className="load-more" type="button" title="Load 10 more items"  onClick={ this.handleLoad }>Load more</a>
                 </div>
 
             );

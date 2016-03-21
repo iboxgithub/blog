@@ -46,10 +46,10 @@ Item = React.createClass({
                         </div>
                         <div className="icons">
                             { currentUser ?
-                            <i className="fa fa-globe fa-2x" value="Translate" onClick={ this.handleTranslate }></i>
+                            <i className="fa fa-globe fa-2x" value="Translate" title="Translate" onClick={ this.handleTranslate }></i>
                                 :''//<a href={'/items/' + lang + '/edit/' + _id}>TRANSLATE</a> : ''
                             }
-                            <i className="fa fa-info-circle fa-2x"type="button" value="Detail" onClick={ this.handleDetail } ></i>
+                            <i className="fa fa-info-circle fa-2x"type="button" value="Detail" title="Detail" onClick={ this.handleDetail } ></i>
 
                         </div>
                     </div>
