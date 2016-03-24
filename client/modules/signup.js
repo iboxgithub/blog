@@ -38,7 +38,11 @@ let validation = () => {
 let _handleSignup = () => {
     let user = {
         email: $( '[name="emailAddress"]' ).val(),
-        password: $( '[name="password"]' ).val()
+        password: $( '[name="password"]' ).val(),
+        profile:{
+            lang1:'en',
+            lang2:'fr'
+        }
     };
 
     Accounts.createUser( user, ( error ) => {

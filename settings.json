@@ -1,0 +1,12 @@
+{
+  "public": {
+    "lang":{
+      "en":"English",
+      "fr":"Francais",
+      "sk":"Slovencina",
+      "ru":"Russian",
+      "ro":"Romanian",
+      "es":"Spanish"
+    }
+  }
+}
