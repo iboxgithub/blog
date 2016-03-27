@@ -1,7 +1,10 @@
 
 Meteor.methods({
-    newItem() {//to call when creating a new Item
+    newEmptyItem(item) {//to call when creating a new Item
         return Items.insert( {} ); //works thanks to schema
+    },
+    newCountryItem(item) {//to call when creating a new Item
+        return Items.insert( item ); //works thanks to schema
     },
     saveItem( item ) { //schema deactivated for the moment
         check( item, Object );
@@ -13,7 +16,7 @@ Meteor.methods({
             ["content." + lang]:{ //computed values mandatory to use dot notation in MongoDB (ECMA2015)
                 author: item.author,
                 date: (new Date()).toISOString(),
-                origin: "http://www.anegdot.co",
+                origin: "anegdot." + Meteor.settings.public.lang['main'].id,
                 text: item.text,
                 title: item.title
             }

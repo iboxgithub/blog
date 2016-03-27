@@ -7,8 +7,8 @@ App = React.createClass({
             isPublic( route ) { //return true if the route name is in this array, BOF c'est ecrit en dur...
                 return [
                         'index',
-                        'items',
-                        'tagIndex',
+                        //'items',
+                        //'tagIndex',
                         'login',
                         'signup',
                         'recoverPassword',
@@ -31,6 +31,8 @@ App = React.createClass({
         return this.data.canView() ? this.props.yield : <Login />;
     },
     render() {
+        //let lang = FlowRouter.getRouteName();
+        //console.log('app ' + lang);
         return (
             <div className="app-root">
                 <AppHeader hasUser={ this.data.hasUser } />

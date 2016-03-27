@@ -25,7 +25,7 @@ Account = React.createClass({
         console.log('Notifs update event');
     },
     convertLang(lang){
-        return Meteor.settings.public.lang[lang];
+        return lang ? Meteor.settings.public.lang[lang].label : '';
     },
     render() {
 
@@ -33,7 +33,7 @@ Account = React.createClass({
         let email = Meteor.user().emails[0].address,
             fullName = Meteor.user().profile.name,
             nativeLang = Meteor.user().profile.lang1,
-            secondLang = Meteor.user().profile.lang2 ? Meteor.user().profile.lang2 : 'en';
+            secondLang = Meteor.user().profile.lang2;
 
         //stats
         let nb_translationsDone = 3,

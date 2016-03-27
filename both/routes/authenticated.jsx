@@ -11,7 +11,14 @@ const authenticatedRoutes = FlowRouter.group({
 authenticatedRoutes.route( '/items/:lang', {
     name: 'items',
     action(params) {
-        ReactLayout.render( App, { yield: <ItemsList private={true} lang={params.lang}/> } );
+        ReactLayout.render( App, { yield: <ItemsList lang={params.lang}/> } );
+    }
+});
+
+authenticatedRoutes.route( '/items/:lang/new', {
+    name: 'new-item',
+    action( params ) {
+        ReactLayout.render( App, { yield: <NewItem lang={params.lang} /> } );
     }
 });
 
@@ -29,9 +36,9 @@ authenticatedRoutes.route( '/items/:lang/detail/:_id', {
     }
 });
 
-authenticatedRoutes.route( '/account', {
+authenticatedRoutes.route( '/account/:lang', {
     name: 'account',
-    action() {
-        ReactLayout.render( App, { yield: <Account /> } );
+    action(params) {
+        ReactLayout.render( App, { yield: <Account lang={params.lang}/> } );
     }
 });

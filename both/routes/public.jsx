@@ -8,35 +8,35 @@ const publicRoutes = FlowRouter.group({
 
 publicRoutes.route( '/', {
     name: 'index',
-    action() {
-        ReactLayout.render( App, { yield: <ItemsList private={false} lang={'en'} /> } ); //SPECIFIC (PostsIndex, Index...)
+    action(params) {
+        ReactLayout.render( App, { yield: <ItemsList lang={Meteor.settings.public.lang['main'].id} /> } ); //SPECIFIC (PostsIndex, Index...)
     }
 });
 
 publicRoutes.route( '/signup', {
     name: 'signup',
-    action() {
+    action(params) {
         ReactLayout.render( App, { yield: <Signup /> } );
     }
 });
 
 publicRoutes.route( '/login', {
     name: 'login',
-    action() {
+    action(params) {
         ReactLayout.render( App, { yield: <Login /> } );
     }
 });
 
 publicRoutes.route( '/recover-password', {
     name: 'recover-password',
-    action() {
+    action(params) {
         ReactLayout.render( App, { yield: <RecoverPassword /> } );
     }
 });
 
 publicRoutes.route( '/reset-password/:token', {
     name: 'reset-password',
-    action() {
+    action(params) {
         ReactLayout.render( App, { yield: <ResetPassword /> } );
     }
 });
@@ -44,19 +44,4 @@ publicRoutes.route( '/reset-password/:token', {
  ------------------------ END GENERIC
  */
 
-
-
-publicRoutes.route( '/posts/:slug', {
-    name: 'singlePost',
-    action( params ) {
-        ReactLayout.render( App, { yield: <SinglePost slug={ params.slug } /> } );
-    }
-});
-
-publicRoutes.route( '/tags/:tag', {
-    name: 'tagIndex',
-    action( params ) {
-        ReactLayout.render( App, { yield: <PostsIndex tag={ params.tag } /> } );
-    }
-});
 

@@ -1,12 +1,30 @@
 {
   "public": {
     "lang":{
-      "en":"English",
-      "fr":"Francais",
-      "sk":"Slovencina",
-      "ru":"Russian",
-      "ro":"Romanian",
-      "es":"Spanish"
+      "main":{
+        "id":"en",
+        "label":"English"
+      },
+      "fr":{
+        "id":"fr",
+        "label":"Français"
+      },
+      "en":{
+        "id":"en",
+        "label":"English"
+      },
+      "sk":{
+        "id":"sk",
+        "label":"Slovak"
+      },
+      "ro":{
+        "id":"ro",
+        "label":"Romanian"
+      },
+      "ru":{
+        "id":"ru",
+        "label":"Russian"
+      }
     }
   }
 }

@@ -74,14 +74,14 @@ Editor = React.createClass({
             }
         };
     },
-    handleChangeTitleFrom(e){
+    /*handleChangeTitleFrom(e){
         //console.log('Form element titleTo changed', e.target.value);
         this.setState({titleFrom: e.target.value});
     },
     handleChangeTextFrom(e){
         //console.log('Form element textTo changed', e.target.value);
         this.setState({textFrom: e.target.value});
-    },
+    },*/
     validationsTo() {
         //console.log('rre');
         let component = this;

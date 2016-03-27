@@ -13,7 +13,7 @@ ItemsList = React.createClass({
         };
     },
     componentDidMount(){
-        Session.set("lang",this.props.lang);
+        //Session.set("lang",this.props.lang);
     },
     handleNewItem() {
         let lang = this.props.lang;
